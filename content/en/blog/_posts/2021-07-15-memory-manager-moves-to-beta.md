@@ -1,30 +1,30 @@
 ---
 layout: blog
-title: "Kubernetes Memory manager moves to beta"
+title: "Kubernetes Memory Manager moves to beta"
 date: 2021-07-15
 slug: kubernetes-1-22-feature-memory-manager-moves-to-beta
 ---
 
-# Memory manager moves to beta
+# Memory Manager moves to beta
 
-The blog post describes the internals of the **Memory manager**, a beta feature of Kubernetes 1.22. The **Memory Manager** is a component in the **kubelet** ecosystem proposed to enable the feature of guaranteed memory (and hugepages) allocation for pods in the [Guaranteed QoS class](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#qos-classes).
+This blog post elaborates on the internals of the **Memory Manager**, a beta feature released in Kubernetes v1.22. The **Memory Manager** is a component situated in the **kubelet** ecosystem, and it was proposed to enable the feature of guaranteed memory (and hugepages) allocation, for the Pods in [Guaranteed QoS class](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/#qos-classes).
 
-This blog post covers:
+This blog post covers the following topics:
 
-1. Why do you need it?
-2. The internal details of how the **MemoryManager** works
-3. Current limitations of the **MemoryManager**
-4. Future work for the **MemoryManager**
+1. The answer to why you really need it!
+2. Details on how the **Memory Manager** operates
+3. Current gaps
+4. Further work planned for the **Memory Manager** development
 
-## Why do you need it?
+## The answer to why you really need it!
 
-To get the best performance and latency for the workload container, container CPUs, PCI devices, and memory should be aligned to the same NUMA node. The kubelet already provides a set of managers to align CPUs and PCI devices, but you did not have a way to align memory. By default, the kernel will try to allocate the memory from the same NUMA node where container CPUs are placed, but it can not guarantee it.
+In order to obtain the highest performance and lowest latency for the workloads running on NUMA-based servers, the container's CPUs, PCI devices, and memory resources should be aligned to the same NUMA node. The kubelet already offers a set of managers to align both CPUs and PCI devices, but it lacked the alignment of the memory resources. By default, the kernel mechanism attempts to allocate memory from the same NUMA node where container's CPUs triggered the allocation, however, it cannot guarantee that there is enough spare memory on this node.
 
-## How does it work?
+## How does the Memory Manger operate?
 
-The memory manager is doing two main things:
-- provides the topology hint to the **Topology Manager**
-- allocates the memory for containers and updates the state
+The Memory Manager is responsible for the following tasks:
+- the provision of the topology hints to the **Topology Manager**
+- the allocation of the memory (hugepages) for containers and respective updates to the state
 
 The overall sequence of the Memory Manager under the Kubelet
 
