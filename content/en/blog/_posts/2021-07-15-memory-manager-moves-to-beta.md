@@ -29,7 +29,7 @@ The Memory Manager is responsible for the following tasks:
 The sequence diagram below demonstrates the main steps in the operation of Memory Manager triggered by the Kubelet.
 
 ![MemoryManagerDiagram
-](/static/images/blog/2021-07-15-memory-manager-moves-to-beta/MemoryManagerDiagram.svg "MemoryManagerDiagram")
+](/images/blog/2021-07-15-memory-manager-moves-to-beta/MemoryManagerDiagram.svg "MemoryManagerDiagram")
 
 In the Admission phase:
 
@@ -58,7 +58,7 @@ It is quite clear what value should be set for the `--memory-manager-policy` par
 - The amount of reserved memory for the resource type must be equal to [NodeAllocatable](https://kubernetes.io/docs/tasks/administer-cluster/reserve-compute-resources/) (`kube-reserved + system-reserved + eviction-hard`) for the resource. The topic is discussed and exemplified in [the official documentation](/docs/tasks/administer-cluster/memory-manager/).
 
 ![ReservedMemory
-](/static/images/blog/2021-07-15-memory-manager-moves-to-beta/ReservedMemory.svg "ReservedMemory")
+](/images/blog/2021-07-15-memory-manager-moves-to-beta/ReservedMemory.svg "ReservedMemory")
 
 ## Current gaps
 
@@ -71,7 +71,7 @@ The NUMA node cannot support both single and cross NUMA node allocations at the 
 Example (without the involvement of Memory Manager):
 
 ![SingleCrossNUMAAllocation
-](/static/images/blog/2021-07-15-memory-manager-moves-to-beta/SingleCrossNUMAAllocation.svg "SingleCrossNUMAAllocation")
+](/images/blog/2021-07-15-memory-manager-moves-to-beta/SingleCrossNUMAAllocation.svg "SingleCrossNUMAAllocation")
 
 1. The `container1` started on the NUMA node 0 and requested *5Gi* of the memory, but it consumes only *3Gi* of the memory.
 2. For container2, the memory request is set to 10Gi, but no single NUMA node can satisfy it.
